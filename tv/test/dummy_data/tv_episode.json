@@ -1,0 +1,66 @@
+{
+  "_id": "623e5a831d78f20088493547",
+  "air_date": "2022-03-24",
+  "episodes": [
+    {
+      "air_date": "2022-03-24",
+      "episode_number": 1,
+      "crew": [],
+      "guest_stars": [
+        {
+          "character": "Self",
+          "credit_id": "623e5c20cfe48f00473b1d7b",
+          "order": 24,
+          "adult": false,
+          "gender": 2,
+          "id": 59254,
+          "known_for_department": "Acting",
+          "name": "Pablo Schreiber",
+          "original_name": "Pablo Schreiber",
+          "popularity": 69.138,
+          "profile_path": "/wOze8R9lgoZxZoTsPSHID4Nt2Ee.jpg"
+        },
+        {
+          "character": "Self",
+          "credit_id": "623e5c3e5a9915005d49e616",
+          "order": 26,
+          "adult": false,
+          "gender": 2,
+          "id": 1275410,
+          "known_for_department": "Acting",
+          "name": "Austin Jenkins",
+          "original_name": "Austin Jenkins",
+          "popularity": 0.618,
+          "profile_path": "/eJi0VgHumNN5MII6K87aELuku6V.jpg"
+        },
+        {
+          "character": "Self - Host",
+          "credit_id": "623e5c2a45765d00944442a7",
+          "order": 34,
+          "adult": false,
+          "gender": 0,
+          "id": 3005887,
+          "known_for_department": "Acting",
+          "name": "Sydnee Goodman",
+          "original_name": "Sydnee Goodman",
+          "popularity": 0.6,
+          "profile_path": null
+        }
+      ],
+      "id": 3620542,
+      "name": "Pablo Schreiber On Becoming The Master Chief",
+      "overview": "Sydnee is joined by the Master Chief himself, Pablo Schreiber, Master Chief's highly advanced A.I., Cortana, and AEW professional wrestler Adam Cole.",
+      "production_code": "",
+      "runtime": 22,
+      "season_number": 0,
+      "still_path": "/fomo40bejAKsTBssLCidOqTRsq8.jpg",
+      "vote_average": 2.0,
+      "vote_count": 2
+    }
+  ],
+  "name": "Specials",
+  "overview": "",
+  "id": 284981,
+  "poster_path": null,
+  "season_number": 0
+}
