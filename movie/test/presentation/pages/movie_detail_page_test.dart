@@ -28,13 +28,6 @@ void main() {
   setUp(() {
     mockMovieDetailBloc = MockMovieDetailBloc();
     mockSaveRemoveWatchlistBloc = MockSaveRemoveWatchlistBloc();
-
-    final di = GetIt.instance;
-    di.registerFactory<MovieDetailBloc>(() => mockMovieDetailBloc);
-    di.registerFactory<SaveRemoveWatchlistBloc>(() => mockSaveRemoveWatchlistBloc);
-
-    movieDetailBloc = di<MovieDetailBloc>();
-    saveRemoveWatchlistBloc = di<SaveRemoveWatchlistBloc>();
   });
 
   const tId = 1;
@@ -82,129 +75,175 @@ void main() {
   testWidgets(
       'Watchlist button should display add icon when movie not added to watchlist',
           (WidgetTester tester) async {
-        when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailInitial());
-        when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailLoading());
-        when(() => mockMovieDetailBloc.add(const LoadMovieDetail(id: tId))).thenAnswer((_) async => {});
-        when(() => mockMovieDetailBloc.state).thenAnswer((_) => MovieDetailSuccess(tMovieDetail, tMovieList, false));
-        when(() => mockSaveRemoveWatchlistBloc.state).thenReturn(const SaveRemoveWatchlistInitial());
+            final di = GetIt.instance;
+            di.registerFactory<MovieDetailBloc>(() => mockMovieDetailBloc);
+            di.registerFactory<SaveRemoveWatchlistBloc>(() => mockSaveRemoveWatchlistBloc);
+            movieDetailBloc = di<MovieDetailBloc>();
+            saveRemoveWatchlistBloc = di<SaveRemoveWatchlistBloc>();
 
-        final watchlistButtonIcon = find.byIcon(Icons.add);
+            when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailInitial());
+            when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailLoading());
+            when(() => mockMovieDetailBloc.add(const LoadMovieDetail(id: tId))).thenAnswer((_) async => {});
+            when(() => mockMovieDetailBloc.state).thenAnswer((_) => MovieDetailSuccess(tMovieDetail, tMovieList, false));
+            when(() => mockSaveRemoveWatchlistBloc.state).thenReturn(const SaveRemoveWatchlistInitial());
 
-        await tester.pumpWidget(_makeTestableWidget(MovieDetailPage(id: 1)));
-        await tester.pump(Duration.zero);
+            final watchlistButtonIcon = find.byIcon(Icons.add);
 
-        expect(watchlistButtonIcon, findsOneWidget);
+            await tester.pumpWidget(_makeTestableWidget(MovieDetailPage(id: 1)));
+            await tester.pump(Duration.zero);
+
+            expect(watchlistButtonIcon, findsOneWidget);
   });
 
   testWidgets(
       'Watchlist button should display check icon when movie is added to watchlist',
           (WidgetTester tester) async {
-        when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailInitial());
-        when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailLoading());
-        when(() => mockMovieDetailBloc.add(const LoadMovieDetail(id: tId))).thenAnswer((_) async => {});
-        when(() => mockMovieDetailBloc.state).thenAnswer((_) => MovieDetailSuccess(tMovieDetail, tMovieList, true));
-        when(() => mockSaveRemoveWatchlistBloc.state).thenReturn(const SaveRemoveWatchlistInitial());
+            final di = GetIt.instance;
+            di.unregister<MovieDetailBloc>();
+            di.unregister<SaveRemoveWatchlistBloc>();
+            di.registerFactory<MovieDetailBloc>(() => mockMovieDetailBloc);
+            di.registerFactory<SaveRemoveWatchlistBloc>(() => mockSaveRemoveWatchlistBloc);
+            movieDetailBloc = di<MovieDetailBloc>();
+            saveRemoveWatchlistBloc = di<SaveRemoveWatchlistBloc>();
 
-        final watchlistButtonIcon = find.byIcon(Icons.check);
+            when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailInitial());
+            when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailLoading());
+            when(() => mockMovieDetailBloc.add(const LoadMovieDetail(id: tId))).thenAnswer((_) async => {});
+            when(() => mockMovieDetailBloc.state).thenAnswer((_) => MovieDetailSuccess(tMovieDetail, tMovieList, true));
+            when(() => mockSaveRemoveWatchlistBloc.state).thenReturn(const SaveRemoveWatchlistInitial());
 
-        await tester.pumpWidget(_makeTestableWidget(MovieDetailPage(id: 1)));
-        await tester.pump(Duration.zero);
+            final watchlistButtonIcon = find.byIcon(Icons.check);
 
-        expect(watchlistButtonIcon, findsOneWidget);
+            await tester.pumpWidget(_makeTestableWidget(MovieDetailPage(id: 1)));
+            await tester.pump(Duration.zero);
+
+            expect(watchlistButtonIcon, findsOneWidget);
   });
 
   testWidgets(
       'Watchlist button should display Snackbar when add to watchlist success',
           (WidgetTester tester) async {
-        when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailInitial());
-        when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailLoading());
-        when(() => mockMovieDetailBloc.add(const LoadMovieDetail(id: tId))).thenAnswer((_) async => {});
-        when(() => mockMovieDetailBloc.state).thenAnswer((_) => MovieDetailSuccess(tMovieDetail, tMovieList, false));
-        when(() => mockSaveRemoveWatchlistBloc.state).thenReturn(const SaveRemoveWatchlistInitial());
-        whenListen(
-          mockSaveRemoveWatchlistBloc,
-          Stream.fromIterable([
-            const SaveRemoveWatchlistLoading(),
-            const AddWatchlistSuccess('Added to Watchlist'),
-          ]),
-          initialState: const SaveRemoveWatchlistInitial(),
-        );
+            final di = GetIt.instance;
+            di.unregister<MovieDetailBloc>();
+            di.unregister<SaveRemoveWatchlistBloc>();
+            di.registerFactory<MovieDetailBloc>(() => mockMovieDetailBloc);
+            di.registerFactory<SaveRemoveWatchlistBloc>(() => mockSaveRemoveWatchlistBloc);
+            movieDetailBloc = di<MovieDetailBloc>();
+            saveRemoveWatchlistBloc = di<SaveRemoveWatchlistBloc>();
 
-        await tester.pumpWidget(_makeTestableWidget(MovieDetailPage(id: 1)));
-        await tester.pump();
+            when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailInitial());
+            when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailLoading());
+            when(() => mockMovieDetailBloc.add(const LoadMovieDetail(id: tId))).thenAnswer((_) async => {});
+            when(() => mockMovieDetailBloc.state).thenAnswer((_) => MovieDetailSuccess(tMovieDetail, tMovieList, false));
+            when(() => mockSaveRemoveWatchlistBloc.state).thenReturn(const SaveRemoveWatchlistInitial());
+            whenListen(
+              mockSaveRemoveWatchlistBloc,
+              Stream.fromIterable([
+                const SaveRemoveWatchlistLoading(),
+                const AddWatchlistSuccess('Added to Watchlist'),
+              ]),
+              initialState: const SaveRemoveWatchlistInitial(),
+            );
 
-        expect(find.byType(SnackBar), findsOneWidget);
-        expect(find.text('Added to Watchlist'), findsOneWidget);
+            await tester.pumpWidget(_makeTestableWidget(MovieDetailPage(id: 1)));
+            await tester.pump();
+
+            expect(find.byType(SnackBar), findsOneWidget);
+            expect(find.text('Added to Watchlist'), findsOneWidget);
   });
 
   testWidgets(
       'Error message when add to watchlist fail',
           (WidgetTester tester) async {
-        when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailInitial());
-        when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailLoading());
-        when(() => mockMovieDetailBloc.add(const LoadMovieDetail(id: tId))).thenAnswer((_) async => {});
-        when(() => mockMovieDetailBloc.state).thenAnswer((_) => MovieDetailSuccess(tMovieDetail, tMovieList, false));
-        when(() => mockSaveRemoveWatchlistBloc.state).thenReturn(const SaveRemoveWatchlistInitial());
-        whenListen(
-          mockSaveRemoveWatchlistBloc,
-          Stream.fromIterable([
-            const SaveRemoveWatchlistLoading(),
-            const SaveRemoveWatchlistError('Database Failure'),
-          ]),
-          initialState: const SaveRemoveWatchlistInitial(),
-        );
+            final di = GetIt.instance;
+            di.unregister<MovieDetailBloc>();
+            di.unregister<SaveRemoveWatchlistBloc>();
+            di.registerFactory<MovieDetailBloc>(() => mockMovieDetailBloc);
+            di.registerFactory<SaveRemoveWatchlistBloc>(() => mockSaveRemoveWatchlistBloc);
+            movieDetailBloc = di<MovieDetailBloc>();
+            saveRemoveWatchlistBloc = di<SaveRemoveWatchlistBloc>();
 
-        await tester.pumpWidget(_makeTestableWidget(MovieDetailPage(id: 1)));
-        await tester.pump();
+            when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailInitial());
+            when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailLoading());
+            when(() => mockMovieDetailBloc.add(const LoadMovieDetail(id: tId))).thenAnswer((_) async => {});
+            when(() => mockMovieDetailBloc.state).thenAnswer((_) => MovieDetailSuccess(tMovieDetail, tMovieList, false));
+            when(() => mockSaveRemoveWatchlistBloc.state).thenReturn(const SaveRemoveWatchlistInitial());
+            whenListen(
+              mockSaveRemoveWatchlistBloc,
+              Stream.fromIterable([
+                const SaveRemoveWatchlistLoading(),
+                const SaveRemoveWatchlistError('Database Failure'),
+              ]),
+              initialState: const SaveRemoveWatchlistInitial(),
+            );
 
-        expect(find.text('Database Failure'), findsOneWidget);
+            await tester.pumpWidget(_makeTestableWidget(MovieDetailPage(id: 1)));
+            await tester.pump();
+
+            expect(find.text('Database Failure'), findsOneWidget);
   });
 
   testWidgets(
       'Watchlist button should display Snackbar when remove from watchlist success',
           (WidgetTester tester) async {
-        when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailInitial());
-        when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailLoading());
-        when(() => mockMovieDetailBloc.add(const LoadMovieDetail(id: tId))).thenAnswer((_) async => {});
-        when(() => mockMovieDetailBloc.state).thenAnswer((_) => MovieDetailSuccess(tMovieDetail, tMovieList, true));
-        when(() => mockSaveRemoveWatchlistBloc.state).thenReturn(const SaveRemoveWatchlistInitial());
-        whenListen(
-          mockSaveRemoveWatchlistBloc,
-          Stream.fromIterable([
-            const SaveRemoveWatchlistLoading(),
-            const DeleteWatchlistSuccess('Removed from Watchlist'),
-          ]),
-          initialState: const SaveRemoveWatchlistInitial(),
-        );
+            final di = GetIt.instance;
+            di.unregister<MovieDetailBloc>();
+            di.unregister<SaveRemoveWatchlistBloc>();
+            di.registerFactory<MovieDetailBloc>(() => mockMovieDetailBloc);
+            di.registerFactory<SaveRemoveWatchlistBloc>(() => mockSaveRemoveWatchlistBloc);
+            movieDetailBloc = di<MovieDetailBloc>();
+            saveRemoveWatchlistBloc = di<SaveRemoveWatchlistBloc>();
 
-        await tester.pumpWidget(_makeTestableWidget(MovieDetailPage(id: 1)));
-        await tester.pump();
+            when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailInitial());
+            when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailLoading());
+            when(() => mockMovieDetailBloc.add(const LoadMovieDetail(id: tId))).thenAnswer((_) async => {});
+            when(() => mockMovieDetailBloc.state).thenAnswer((_) => MovieDetailSuccess(tMovieDetail, tMovieList, true));
+            when(() => mockSaveRemoveWatchlistBloc.state).thenReturn(const SaveRemoveWatchlistInitial());
+            whenListen(
+              mockSaveRemoveWatchlistBloc,
+              Stream.fromIterable([
+                const SaveRemoveWatchlistLoading(),
+                const DeleteWatchlistSuccess('Removed from Watchlist'),
+              ]),
+              initialState: const SaveRemoveWatchlistInitial(),
+            );
 
-        expect(find.byType(SnackBar), findsOneWidget);
-        expect(find.text('Removed from Watchlist'), findsOneWidget);
+            await tester.pumpWidget(_makeTestableWidget(MovieDetailPage(id: 1)));
+            await tester.pump();
+
+            expect(find.byType(SnackBar), findsOneWidget);
+            expect(find.text('Removed from Watchlist'), findsOneWidget);
   });
 
   testWidgets(
       'Error message when remove from watchlist fail',
           (WidgetTester tester) async {
-        when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailInitial());
-        when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailLoading());
-        when(() => mockMovieDetailBloc.add(const LoadMovieDetail(id: tId))).thenAnswer((_) async => {});
-        when(() => mockMovieDetailBloc.state).thenAnswer((_) => MovieDetailSuccess(tMovieDetail, tMovieList, true));
-        when(() => mockSaveRemoveWatchlistBloc.state).thenReturn(const SaveRemoveWatchlistInitial());
-        whenListen(
-          mockSaveRemoveWatchlistBloc,
-          Stream.fromIterable([
-            const SaveRemoveWatchlistLoading(),
-            const SaveRemoveWatchlistError('Database Failure'),
-          ]),
-          initialState: const SaveRemoveWatchlistInitial(),
-        );
+            final di = GetIt.instance;
+            di.unregister<MovieDetailBloc>();
+            di.unregister<SaveRemoveWatchlistBloc>();
+            di.registerFactory<MovieDetailBloc>(() => mockMovieDetailBloc);
+            di.registerFactory<SaveRemoveWatchlistBloc>(() => mockSaveRemoveWatchlistBloc);
+            movieDetailBloc = di<MovieDetailBloc>();
+            saveRemoveWatchlistBloc = di<SaveRemoveWatchlistBloc>();
 
-        await tester.pumpWidget(_makeTestableWidget(MovieDetailPage(id: 1)));
-        await tester.pump();
+            when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailInitial());
+            when(() => mockMovieDetailBloc.state).thenReturn(const MovieDetailLoading());
+            when(() => mockMovieDetailBloc.add(const LoadMovieDetail(id: tId))).thenAnswer((_) async => {});
+            when(() => mockMovieDetailBloc.state).thenAnswer((_) => MovieDetailSuccess(tMovieDetail, tMovieList, true));
+            when(() => mockSaveRemoveWatchlistBloc.state).thenReturn(const SaveRemoveWatchlistInitial());
+            whenListen(
+              mockSaveRemoveWatchlistBloc,
+              Stream.fromIterable([
+                const SaveRemoveWatchlistLoading(),
+                const SaveRemoveWatchlistError('Database Failure'),
+              ]),
+              initialState: const SaveRemoveWatchlistInitial(),
+            );
 
-        expect(find.text('Database Failure'), findsOneWidget);
+            await tester.pumpWidget(_makeTestableWidget(MovieDetailPage(id: 1)));
+            await tester.pump();
+
+            expect(find.text('Database Failure'), findsOneWidget);
   });
 
 }

@@ -19,11 +19,6 @@ void main() {
 
   setUp(() {
     mockGetWatchlistMoviesBloc = MockGetWatchlistMoviesBloc();
-
-    final di = GetIt.instance;
-    di.registerFactory<GetWatchlistMoviesBloc>(() => mockGetWatchlistMoviesBloc);
-
-    getWatchlistMoviesBloc = di<GetWatchlistMoviesBloc>();
   });
 
   final tMovieModel = Movie(
@@ -55,44 +50,58 @@ void main() {
 
   testWidgets('Page should display center progress bar when loading',
           (WidgetTester tester) async {
-        when(() => mockGetWatchlistMoviesBloc.state).thenReturn(const GetWatchlistMoviesInitial());
-        when(() => mockGetWatchlistMoviesBloc.state).thenReturn(const GetWatchlistMoviesLoading());
+            final di = GetIt.instance;
+            di.registerFactory<GetWatchlistMoviesBloc>(() => mockGetWatchlistMoviesBloc);
+            getWatchlistMoviesBloc = di<GetWatchlistMoviesBloc>();
 
-        final progressBarFinder = find.byType(CircularProgressIndicator);
-        final centerFinder = find.byType(Center);
+            when(() => mockGetWatchlistMoviesBloc.state).thenReturn(const GetWatchlistMoviesInitial());
+            when(() => mockGetWatchlistMoviesBloc.state).thenReturn(const GetWatchlistMoviesLoading());
 
-        await tester.pumpWidget(_makeTestableWidget(WatchlistMoviesPage()));
+            final progressBarFinder = find.byType(CircularProgressIndicator);
+            final centerFinder = find.byType(Center);
 
-        expect(centerFinder, findsOneWidget);
-        expect(progressBarFinder, findsOneWidget);
+            await tester.pumpWidget(_makeTestableWidget(WatchlistMoviesPage()));
+
+            expect(centerFinder, findsOneWidget);
+            expect(progressBarFinder, findsOneWidget);
   });
 
   testWidgets('Page should display ListView when data is loaded',
           (WidgetTester tester) async {
-        when(() => mockGetWatchlistMoviesBloc.state).thenReturn(const GetWatchlistMoviesInitial());
-        when(() => mockGetWatchlistMoviesBloc.state).thenReturn(const GetWatchlistMoviesLoading());
-        when(() => mockGetWatchlistMoviesBloc.add(LoadWatchlistMovies())).thenAnswer((_) async => {});
-        when(() => mockGetWatchlistMoviesBloc.state).thenAnswer((_) => GetWatchlistMoviesSuccess(tMovieList));
+            final di = GetIt.instance;
+            di.unregister<GetWatchlistMoviesBloc>();
+            di.registerFactory<GetWatchlistMoviesBloc>(() => mockGetWatchlistMoviesBloc);
+            getWatchlistMoviesBloc = di<GetWatchlistMoviesBloc>();
 
-        final listViewFinder = find.byType(ListView);
+            when(() => mockGetWatchlistMoviesBloc.state).thenReturn(const GetWatchlistMoviesInitial());
+            when(() => mockGetWatchlistMoviesBloc.state).thenReturn(const GetWatchlistMoviesLoading());
+            when(() => mockGetWatchlistMoviesBloc.add(LoadWatchlistMovies())).thenAnswer((_) async => {});
+            when(() => mockGetWatchlistMoviesBloc.state).thenAnswer((_) => GetWatchlistMoviesSuccess(tMovieList));
 
-        await tester.pumpWidget(_makeTestableWidget(WatchlistMoviesPage()));
+            final listViewFinder = find.byType(ListView);
 
-        expect(listViewFinder, findsOneWidget);
+            await tester.pumpWidget(_makeTestableWidget(WatchlistMoviesPage()));
+
+            expect(listViewFinder, findsOneWidget);
   });
 
   testWidgets('Page should display text with message when Error',
           (WidgetTester tester) async {
-        when(() => mockGetWatchlistMoviesBloc.state).thenReturn(const GetWatchlistMoviesInitial());
-        when(() => mockGetWatchlistMoviesBloc.state).thenReturn(const GetWatchlistMoviesLoading());
-        when(() => mockGetWatchlistMoviesBloc.add(LoadWatchlistMovies())).thenAnswer((_) async => {});
-        when(() => mockGetWatchlistMoviesBloc.state).thenAnswer((_) => const GetWatchlistMoviesError("error_message"));
+            final di = GetIt.instance;
+            di.unregister<GetWatchlistMoviesBloc>();
+            di.registerFactory<GetWatchlistMoviesBloc>(() => mockGetWatchlistMoviesBloc);
+            getWatchlistMoviesBloc = di<GetWatchlistMoviesBloc>();
 
-        final textFinder = find.byKey(const Key('error_message'));
+            when(() => mockGetWatchlistMoviesBloc.state).thenReturn(const GetWatchlistMoviesInitial());
+            when(() => mockGetWatchlistMoviesBloc.state).thenReturn(const GetWatchlistMoviesLoading());
+            when(() => mockGetWatchlistMoviesBloc.add(LoadWatchlistMovies())).thenAnswer((_) async => {});
+            when(() => mockGetWatchlistMoviesBloc.state).thenAnswer((_) => const GetWatchlistMoviesError("error_message"));
 
-        await tester.pumpWidget(_makeTestableWidget(WatchlistMoviesPage()));
+            final textFinder = find.byKey(const Key('error_message'));
 
-        expect(textFinder, findsOneWidget);
+            await tester.pumpWidget(_makeTestableWidget(WatchlistMoviesPage()));
+
+            expect(textFinder, findsOneWidget);
   });
 
 }

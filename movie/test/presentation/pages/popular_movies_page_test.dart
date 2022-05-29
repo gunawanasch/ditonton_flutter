@@ -18,11 +18,6 @@ void main() {
 
   setUp(() {
     mockPopularMoviesBloc = MockPopularMoviesBloc();
-
-    final di = GetIt.instance;
-    di.registerFactory<PopularMoviesBloc>(() => mockPopularMoviesBloc);
-
-    popularMoviesBloc = di<PopularMoviesBloc>();
   });
 
   final tMovieModel = Movie(
@@ -54,44 +49,58 @@ void main() {
 
   testWidgets('Page should display center progress bar when loading',
       (WidgetTester tester) async {
-    when(() => mockPopularMoviesBloc.state).thenReturn(const PopularMoviesInitial());
-    when(() => mockPopularMoviesBloc.state).thenReturn(const PopularMoviesLoading());
+        final di = GetIt.instance;
+        di.registerFactory<PopularMoviesBloc>(() => mockPopularMoviesBloc);
+        popularMoviesBloc = di<PopularMoviesBloc>();
 
-    final progressBarFinder = find.byType(CircularProgressIndicator);
-    final centerFinder = find.byType(Center);
+        when(() => mockPopularMoviesBloc.state).thenReturn(const PopularMoviesInitial());
+        when(() => mockPopularMoviesBloc.state).thenReturn(const PopularMoviesLoading());
 
-    await tester.pumpWidget(_makeTestableWidget(PopularMoviesPage()));
+        final progressBarFinder = find.byType(CircularProgressIndicator);
+        final centerFinder = find.byType(Center);
 
-    expect(centerFinder, findsOneWidget);
-    expect(progressBarFinder, findsOneWidget);
+        await tester.pumpWidget(_makeTestableWidget(PopularMoviesPage()));
+
+        expect(centerFinder, findsOneWidget);
+        expect(progressBarFinder, findsOneWidget);
   });
 
   testWidgets('Page should display ListView when data is loaded',
       (WidgetTester tester) async {
-    when(() => mockPopularMoviesBloc.state).thenReturn(const PopularMoviesInitial());
-    when(() => mockPopularMoviesBloc.state).thenReturn(const PopularMoviesLoading());
-    when(() => mockPopularMoviesBloc.add(PopularMovies())).thenAnswer((_) async => {});
-    when(() => mockPopularMoviesBloc.state).thenAnswer((_) => PopularMoviesSuccess(tMovieList));
+        final di = GetIt.instance;
+        di.unregister<PopularMoviesBloc>();
+        di.registerFactory<PopularMoviesBloc>(() => mockPopularMoviesBloc);
+        popularMoviesBloc = di<PopularMoviesBloc>();
 
-    final listViewFinder = find.byType(ListView);
+        when(() => mockPopularMoviesBloc.state).thenReturn(const PopularMoviesInitial());
+        when(() => mockPopularMoviesBloc.state).thenReturn(const PopularMoviesLoading());
+        when(() => mockPopularMoviesBloc.add(PopularMovies())).thenAnswer((_) async => {});
+        when(() => mockPopularMoviesBloc.state).thenAnswer((_) => PopularMoviesSuccess(tMovieList));
 
-    await tester.pumpWidget(_makeTestableWidget(PopularMoviesPage()));
+        final listViewFinder = find.byType(ListView);
 
-    expect(listViewFinder, findsOneWidget);
+        await tester.pumpWidget(_makeTestableWidget(PopularMoviesPage()));
+
+        expect(listViewFinder, findsOneWidget);
   });
 
   testWidgets('Page should display text with message when Error',
       (WidgetTester tester) async {
-    when(() => mockPopularMoviesBloc.state).thenReturn(const PopularMoviesInitial());
-    when(() => mockPopularMoviesBloc.state).thenReturn(const PopularMoviesLoading());
-    when(() => mockPopularMoviesBloc.add(PopularMovies())).thenAnswer((_) async => {});
-    when(() => mockPopularMoviesBloc.state).thenAnswer((_) => const PopularMoviesError('error_message'));
+        final di = GetIt.instance;
+        di.unregister<PopularMoviesBloc>();
+        di.registerFactory<PopularMoviesBloc>(() => mockPopularMoviesBloc);
+        popularMoviesBloc = di<PopularMoviesBloc>();
 
-    final textFinder = find.byKey(const Key('error_message'));
+        when(() => mockPopularMoviesBloc.state).thenReturn(const PopularMoviesInitial());
+        when(() => mockPopularMoviesBloc.state).thenReturn(const PopularMoviesLoading());
+        when(() => mockPopularMoviesBloc.add(PopularMovies())).thenAnswer((_) async => {});
+        when(() => mockPopularMoviesBloc.state).thenAnswer((_) => const PopularMoviesError('error_message'));
 
-    await tester.pumpWidget(_makeTestableWidget(PopularMoviesPage()));
+        final textFinder = find.byKey(const Key('error_message'));
 
-    expect(textFinder, findsOneWidget);
+        await tester.pumpWidget(_makeTestableWidget(PopularMoviesPage()));
+
+        expect(textFinder, findsOneWidget);
   });
 
 }
