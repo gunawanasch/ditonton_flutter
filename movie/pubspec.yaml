@@ -24,6 +24,7 @@ dependencies:
   flutter_rating_bar: ^4.0.0
   encrypt: ^5.0.1
   firebase_crashlytics: ^2.8.0
+  mocktail: ^0.3.0
   core:
     path: ../core
   tv:

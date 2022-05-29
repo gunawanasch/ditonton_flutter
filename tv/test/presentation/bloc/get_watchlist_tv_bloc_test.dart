@@ -8,7 +8,7 @@ import 'package:tv/domain/entities/tv.dart';
 import 'package:tv/domain/usecases/get_watchlist_tv.dart';
 import 'package:tv/presentation/bloc/get_watchlist_tv_bloc.dart';
 
-import '../provider/watchlist_tv_notifier_test.mocks.dart';
+import 'get_watchlist_tv_bloc_test.mocks.dart';
 
 @GenerateMocks([GetWatchlistTV])
 void main() {

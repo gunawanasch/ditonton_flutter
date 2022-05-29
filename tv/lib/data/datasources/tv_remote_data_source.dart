@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:core/utils/exception.dart';
 import 'package:flutter/services.dart';

@@ -25,48 +25,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => movie_di.locator<MovieListNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => movie_di.locator<MovieDetailNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => movie_di.locator<MovieSearchNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => movie_di.locator<TopRatedMoviesNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => movie_di.locator<PopularMoviesNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => movie_di.locator<WatchlistMovieNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => tv_di.locator<TVListNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => tv_di.locator<TVDetailNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => tv_di.locator<TVSearchNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => tv_di.locator<NowPlayingTVNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => tv_di.locator<PopularTVNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => tv_di.locator<TopRatedTVNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => tv_di.locator<WatchlistTVNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => tv_di.locator<TVEpisodeNotifier>(),
-        ),
         BlocProvider(
           create: (_) => movie_di.locator<SearchBloc>(),
         ),

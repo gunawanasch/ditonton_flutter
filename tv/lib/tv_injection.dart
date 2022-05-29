@@ -35,54 +35,6 @@ import 'domain/usecases/search_tv.dart';
 final locator = GetIt.instance;
 
 void init() {
-  // provider
-  locator.registerFactory(
-        () => TVListNotifier(
-      getNowPlayingTV: locator(),
-      getPopularTV: locator(),
-      getTopRatedTV: locator(),
-    ),
-  );
-  locator.registerFactory(
-        () => TVDetailNotifier(
-      getTVDetail: locator(),
-      getTVRecommendations: locator(),
-      getWatchListStatusTV: locator(),
-      saveWatchlistTV: locator(),
-      removeWatchlistTV: locator(),
-    ),
-  );
-  locator.registerFactory(
-        () => TVSearchNotifier(
-      searchTV: locator(),
-    ),
-  );
-  locator.registerFactory(
-        () => NowPlayingTVNotifier(
-      getNowPlayingTV: locator(),
-    ),
-  );
-  locator.registerFactory(
-        () => PopularTVNotifier(
-      locator(),
-    ),
-  );
-  locator.registerFactory(
-        () => TopRatedTVNotifier(
-      getTopRatedTV: locator(),
-    ),
-  );
-  locator.registerFactory(
-        () => WatchlistTVNotifier(
-      getWatchlistTV: locator(),
-    ),
-  );
-  locator.registerFactory(
-        () => TVEpisodeNotifier(
-      getTVEpisode: locator(),
-    ),
-  );
-
   // use case
   locator.registerLazySingleton(() => GetNowPlayingTV(locator()));
   locator.registerLazySingleton(() => GetPopularTV(locator()));
